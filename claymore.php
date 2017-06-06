@@ -32,7 +32,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 		$tcp = new tcpRequest(array('host'=>$this->host,'port'=>$this->port));
 		
 		$request = ('{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"'.$this->psw.'}'."\n");
-		var_dump($request);
+		//var_dump($request);
 		
 		$result=json_decode($tcp->send($request));
 		
