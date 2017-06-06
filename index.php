@@ -20,9 +20,15 @@ class rpifm {
 	public function __construct($argv){
 		$this->config = require('config.php');
 		$this->curl = new curl();
-		declare(ticks = 1); // enable signal handling
-		 pcntl_signal(SIGINT, array($this,'saveAllConfigs'));  
-		 pcntl_signal(SIGTERM, array($this,'saveAllConfigs')); 
+
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			//винда :(
+		} else {
+			declare(ticks = 1); // enable signal handling
+			 pcntl_signal(SIGINT, array($this,'saveAllConfigs'));  
+			 pcntl_signal(SIGTERM, array($this,'saveAllConfigs')); 
+		}
+
 		if (file_exists('vars.php')) {
 			$config = json_decode(file_get_contents('vars.php'));
 			$this->vars = $config;

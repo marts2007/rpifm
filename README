@@ -1,5 +1,6 @@
 First - edit config.php (add telegram bot api key and all your ferms)
 edit your php.ini - set max_execution_time to 0
+install or enable php_curl 
 run it 2 times 
 1 - php index.php
 2 - php index.php cron
