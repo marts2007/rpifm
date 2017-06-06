@@ -1,7 +1,7 @@
 <?php
 return array(
 	'general' => array(
-		'telegramkey' =>'376150922:AAGwFFHRo6yww1Lh6KaLjhmt7wwhb-WWKo4' //bot api key here
+		'telegramkey' =>'' //bot api key here
 
 	),
 
