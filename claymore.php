@@ -5,6 +5,7 @@ class claymore {
 public $host;
 public $port;
 public $gpu;
+public $psw;
 public $critemp;
 public $crispeed;
 public $name;
@@ -21,13 +22,19 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 			$this->name = $params['name'];
 			$this->alerts = $params['alerts'];
 			$this->crispeed = $params['crispeed'];
+			$this->psw = $params['psw'];
+			if ($this->psw)
+				$this->psw=',"psw":"'.$this->psw.'"';
 	}
 
 	public function getData(){
 
 		$tcp = new tcpRequest(array('host'=>$this->host,'port'=>$this->port));
-
-		$result=json_decode($tcp->send('{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"}'."\n"));
+		
+		$request = ('{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"'.$this->psw.'}'."\n");
+		var_dump($request);
+		
+		$result=json_decode($tcp->send($request));
 		
 		if (isset($result->result)){
 			$this->connecttry=0;

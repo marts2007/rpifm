@@ -20,15 +20,14 @@ class rpifm {
 	public function __construct($argv){
 		$this->config = require('config.php');
 		$this->curl = new curl();
-
+		declare(ticks = 1); // enable signal handling
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			//винда :(
-		} else {
-			declare(ticks = 1); // enable signal handling
-			 pcntl_signal(SIGINT, array($this,'saveAllConfigs'));  
-			 pcntl_signal(SIGTERM, array($this,'saveAllConfigs')); 
-		}
-
+			  //винда :(
+			} else {
+			  declare(ticks = 1); // enable signal handling
+			   pcntl_signal(SIGINT, array($this,'saveAllConfigs'));  
+			   pcntl_signal(SIGTERM, array($this,'saveAllConfigs')); 
+			}
 		if (file_exists('vars.php')) {
 			$config = json_decode(file_get_contents('vars.php'));
 			$this->vars = $config;
@@ -36,7 +35,6 @@ class rpifm {
 			file_put_contents('vars.php',json_encode(array('lastupdateid'=>0,'notifylist'=>array())));
 		}
 	
-
 		if (isset($this->config['ferms'])) {
 			if (count($this->config['ferms'])>0) {
 				//инициализируем майнер вотчи
@@ -47,6 +45,7 @@ class rpifm {
 																			'name'=>$name,
 																			'host'=>$ferm['host'],
 																			'port'=>$ferm['port'],
+																			'psw'=>$ferm['psw'],
 																			'gpu'=>$ferm['gpu'],
 																			'critemp'=>$ferm['critemp'],
 																			'crispeed'=>$ferm['crispeed'],
@@ -195,7 +194,6 @@ class rpifm {
 
 
 }
-
 
 $rpifm = new rpifm($argv);
 
