@@ -10,7 +10,7 @@ require('claymore.php');
 
 class rpifm {
 	public $curl;
-	public $motd = "commands: all - display all commands\r\nnotify - keep notify\r\nunotify - stop notify\r\nferm name - show ferm info by it`s name\r\n";
+	public $motd = "commands: \r\nall - display all commands\r\nnotify - keep notify\r\nunotify - stop notify\r\nferm name - show ferm info by it`s name\r\n";
 	public $vars;
 	public $config;
 	public $ferms;
