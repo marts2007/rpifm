@@ -1,9 +1,46 @@
-First - edit config.php (add telegram bot api key and all your ferms)
-edit your php.ini - set max_execution_time to 0
-install or enable php_curl 
-set chmod 777 on script folder
-run it 2 times 
-1 - php index.php
-2 - php index.php cron
+##By MartS 2017 admin.marts@gmail.com
+# Like it? donation btc address: 1CAVKj9o36Sb25FCZpfnk5pRESHzFKcWKD
+
+[ENG]
+
+1 - edit config.php (add telegram bot api key (https://core.telegram.org/bots#3-how-do-i-create-a-bot)  and all your ferms settings)
+2 - edit your php.ini (set max_execution_time to 0, install or enable php_curl)
+3 - set chmod 777 on script folder
+4 - edit your miner .bat file - (claymore - add --mport:3333) / (ewbf - add  --api 0.0.0.0:12345)
+5 - create run scripts
+WINDOWS 
+	create 2 .bat files
+		1 - "[php bin folder]/php.exe [bot folder]/index.php"
+		2 - "[php bin folder]/php.exe [bot folder]/index.php cron"
+LINUX
+	create 2 .sh files
+		1 - "[php bin folder]/php [bot folder]/index.php"
+		2 - "[php bin folder]/php [bot folder]/index.php cron"	
+6 - run both scripts
+
+
+[РУС]
+
+1 - отредактируйте config.php (добавьте telegram bot api ключ (получить можно через телеграм у бота с именем @botfather, подробнее тут  https://core.telegram.org/bots#3-how-do-i-create-a-bot) и настройте параметры ваших ферм.
+2 - отредактируйте php.ini	(параметр max_execution_time 0) установите, или включите модуль php_curl
+3 - права на папку с ботом выставите chmod 777 (разрешить чтение запись, для всех)
+4 - отредактируйте батник запуска майнера - (claymore - добавьте --mport:3333) / (ewbf - добавьте --api 0.0.0.0:12345)
+5 - создайте скрипты запуска
+
+WINDOWS 
+	создайте 2 .bat файла
+		1 - "[путь к папке с бинарниками php]/php.exe [bot folder]/index.php"
+		2 - "[путь к папке с бинарниками php]/php.exe [bot folder]/index.php cron"
+LINUX
+	create 2 .sh files
+		1 - "[путь к папке с бинарниками php]/php [bot folder]/index.php"
+		2 - "[путь к папке с бинарниками php]/index.php cron"	
+6 - запустите оба файла
+
+7 - можно писать боту, список команд бот напишет в ответ на любое сообщение.
+
 
 Like it? donation btc address: 1CAVKj9o36Sb25FCZpfnk5pRESHzFKcWKD
+
+
+
