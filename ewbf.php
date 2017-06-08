@@ -121,7 +121,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
-				$text.="Can not connect to ".$name.", looks like it`s down!\r\n";
+				$text.="Can not connect to ".$this->name.", looks like it`s down!\r\n";
 				$this->notice['connect']=true;
 		} else {
 				if (is_array($data)) {
