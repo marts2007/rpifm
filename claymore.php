@@ -165,7 +165,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//var_dump($stateok);
 					if (in_array(false,$stateok)) {
-						echo 'something wrong'."\r\n";
+						echo 'something wrong '.$this->name." \r\n";
 						if (!$this->notice['speed']) {
 							$this->notice['speed']=true;
 							$text.="Hashrate of ".$this->name." is too low! (<".$this->crispeed.")\r\n";

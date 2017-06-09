@@ -17,6 +17,10 @@ class curl{
 				curl_setopt($curl, CURLOPT_HEADER, 0);
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
+				curl_setopt($curl,CURLOPT_CONNECTTIMEOUT,3);
+				curl_setopt($curl,CURLOPT_DNS_CACHE_TIMEOUT,5);
+				curl_setopt($curl,CURLOPT_TIMEOUT,3);
+
 				curl_setopt($curl, CURLOPT_URL, $url);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
 				curl_setopt($curl, CURLOPT_ENCODING , "gzip");
