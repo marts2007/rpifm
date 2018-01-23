@@ -130,20 +130,20 @@ class rpifm {
   }
 
   public function parse($update){
-    $string = strtolower($update->message->text);
-    if(strpos($string, '/') !== false) {
-
+    $string = $update->message->text;
+    if(preg_match('~^/(\w+)(@\w+)?$~', $string, $matches)) {
+      $string=strtolower($matches[1]);
       switch ($string){
-        case '/start':
+        case 'start':
            $start="Hello, use /help command to see all available options.";
            $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$start));
         break;
 
-        case '/help':
+        case 'help':
            $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$this->motd));
         break;
 
-        case '/list':
+        case 'list':
           $text='';
           foreach($this->ferms as $name=>$ferm) {
             $text.="/".$name."\r\n";
@@ -151,7 +151,7 @@ class rpifm {
           $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$text));
         break;
 
-        case '/all':
+        case 'all':
           $text='';
           foreach($this->ferms as $name=>$ferm) {
             $tmp=$ferm->getData();
@@ -160,7 +160,7 @@ class rpifm {
           $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$text));
         break;
 
-        case '/notify':
+        case 'notify':
           if (!in_array($update->message->chat->id,$this->vars->notifylist)) {
             $this->vars->notifylist[]=$update->message->chat->id;
             $this->saveConfig();
@@ -168,7 +168,7 @@ class rpifm {
           } else $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>'You are already in my notify list ;)'));
         break;
 
-        case '/unotify':
+        case 'unotify':
           if (in_array($update->message->chat->id,$this->vars->notifylist)) {
             $this->vars->notifylist=array_diff($this->vars->notifylist, array($update->message->chat->id));
             $this->saveConfig();
@@ -177,8 +177,6 @@ class rpifm {
         break;
 
         default:
-
-        $string=substr($string, 1);
         foreach($this->ferms as $name=>$ferm) {
           if(strcasecmp($string, $name)==0){
             $result=$this->ferms[$name]->getData();
