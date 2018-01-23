@@ -177,12 +177,13 @@ class rpifm {
         break;
 
         default:
-        $string=substr($string, 1);
 
-        if (isset($this->ferms[$string])) {
-          $result=$this->ferms[$string]->getData();
-          if (is_array($result)) {
+        $string=substr($string, 1);
+        foreach($this->ferms as $name=>$ferm) {
+          if(strcasecmp($string, $name)==0){
+            $result=$this->ferms[$name]->getData();
             $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$result['text']."\r\n"));
+            break;
           }
         }
       }
