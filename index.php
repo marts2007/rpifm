@@ -179,12 +179,12 @@ class rpifm {
         default:
         $string=substr($string, 1);
 
-          if (isset($this->ferms[$string])) {
-            $result=$this->ferms[$string]->getData();
-            if (is_array($result)) {
-              $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$result['text']."\r\n"));
-            }
+        if (isset($this->ferms[$string])) {
+          $result=$this->ferms[$string]->getData();
+          if (is_array($result)) {
+            $this->query('sendMessage',array('chat_id'=>$update->message->chat->id,'text'=>$result['text']."\r\n"));
           }
+        }
       }
     }
   }
