@@ -151,7 +151,6 @@ class rpifm {
     switch ($string){
       case 'restart':
       $feedback='Restarting miner...'.PHP_EOL;
-
       $lin='tbc';
       $win='restart_miner.bat';
       break;
@@ -183,11 +182,8 @@ class rpifm {
         //it's command not for this rig
         $this->active = 'false';
       }
-
-    //$feedback='Unknown command'.PHP_EOL;
     }
 
-    echo $feedback." ".$this->active.PHP_EOL;
     if ($this->active == 'true')
     {
       $this->query('sendMessage'
