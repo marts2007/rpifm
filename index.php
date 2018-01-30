@@ -86,7 +86,7 @@ class rpifm {
 
     if (@$argv[1]=='cron') {
       echo("Starting cron jobs\r\n");
-      while(1==1) {
+      while(true) {
           if (isset($this->vars->notifylist)){
             if (count($this->vars->notifylist)){
               $text=$this->checkEvents();
@@ -151,8 +151,9 @@ class rpifm {
     switch ($string){
       case 'restart':
       $feedback='Restarting miner...'.PHP_EOL;
+
       $lin='tbc';
-      $win='taskkill.exe /f /im "miner.exe"';
+      $win='restart_miner.bat';
       break;
 
       case 'reboot':
@@ -177,12 +178,10 @@ class rpifm {
             . $this->cmd));
           //next command exectly for this rig
           $this->active = 'true';
-          echo "++true".PHP_EOL;
           break;
         }
         //it's command not for this rig
         $this->active = 'false';
-        echo "--false".PHP_EOL;
       }
 
     //$feedback='Unknown command'.PHP_EOL;
@@ -195,7 +194,8 @@ class rpifm {
         , array('chat_id'=>$update->message->chat->id,'text'=>$feedback));
       if (isset($win) || isset($lin)){
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-          //system($win." > NUL");
+          pclose(popen($win, "r"));
+          //pclose(popen($win, "r"));
           echo "Command: ".$win.PHP_EOL;
         } else {
           shell_exec("/usr/bin/nohup ".$lin." >/dev/null 2>&1 &");

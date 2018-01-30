@@ -21,7 +21,7 @@ LINUX
 		2 - "[php bin folder]/php index.php cron"
 		3 - "[php bin folder]/php.exe index.php watcher"
 6 - run first and second scripts on 24/7 running host.
-7 - run third script on rigs.
+7 - run third script on rigs. Exclude other rigs info from config.php before.
 
 Assignment of files:
 1. The process responds to bot commands. He is able to parse the state of the miner via the web.
@@ -47,7 +47,7 @@ LINUX
 		2 - "[путь к папке с бинарниками php]/index.php cron"
 		3 - "[php bin folder]/php.exe index.php watcher"
 6 - запустите два первых файла
-7 - Третий файл запустите на риге
+7 - Третий файл запустите на риге. Предварительно удалите онформацию о других ригах из config.php
 
 Назначение файлов:
 1. Процесс отвечает на команды бота. Умеет парсить состояние майнера через web.
