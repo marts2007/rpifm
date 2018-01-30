@@ -190,7 +190,7 @@ class rpifm {
         , array('chat_id'=>$update->message->chat->id,'text'=>$feedback));
       if (isset($win) || isset($lin)){
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-          pclose(popen($win, "r"));
+          pclose(popen($win.">NUL", "r"));
           //pclose(popen($win, "r"));
           echo "Command: ".$win.PHP_EOL;
         } else {
