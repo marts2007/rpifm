@@ -30,12 +30,12 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 	public function getData(){
 
 		$tcp = new tcpRequest(array('host'=>$this->host,'port'=>$this->port));
-		
+
 		$request = ('{"id":0,"jsonrpc":"2.0","method":"miner_getstat1"'.$this->psw.'}'."\n");
 		//var_dump($request);
-		
+
 		$result=json_decode($tcp->send($request));
-		
+
 		if (isset($result->result)){
 			$this->connecttry=0;
 			//var_dump($result);
@@ -43,7 +43,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 			$ethhashrates=explode(';',$result->result['3']);
 			$dcrhashrates=explode(';',$result->result['5']);
 			//var_dump($temps);
-			$text=$this->name." statistic\r\n";
+			$text="/".$this->name." ".PHP_EOL;
 			for($i=0;$i<$this->gpu;$i++) {
 				$gpu[$i]=array('temp'=>$temps[$i*2],'cooler'=>$temps[$i+2],'erate'=>round($ethhashrates[$i]/1000,2),'drate'=>$dcrhashrates[$i]);
 				$text.="GPU".$i."\t".$gpu[$i]['temp']."°(".$gpu[$i]['cooler']."%)\t".$gpu[$i]['erate']." hs / ".$gpu[$i]['drate']." hs\r\n";
@@ -52,15 +52,15 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 			//$gpu[0]=array('temp'=>$temps[0],'cooler'=>$temps[$i+2],'erate'=>round($ethhashrates[$i]/1000,2),'drate'=>$dcrhashrates[$i]);
 
-		
-	
+
+
 			/*
 			$text.="GPU0\t".$gpu[0]['temp']."°(".$gpu[0]['cooler']."%)\t".$gpu[0]['erate']." hs / ".$gpu[0]['drate']." hs\r\n";
 			$text.="GPU1\t".$gpu[1]['temp']."°(".$gpu[1]['cooler']."%)\t".$gpu[1]['erate']." hs / ".$gpu[1]['drate']." hs\r\n";
 			$text.="GPU2\t".$gpu[2]['temp']."°(".$gpu[2]['cooler']."%)\t".$gpu[2]['erate']." hs / ".$gpu[2]['drate']." hs\r\n";
 			$text.="GPU3\t".$gpu[3]['temp']."°(".$gpu[3]['cooler']."%)\t".$gpu[3]['erate']." hs / ".$gpu[3]['drate']." hs\r\n";	*/
 			return array('text'=>$text,'stat'=>$gpu);
-			/*$request=('http://srv2.inshell.ru/temp/ferm6.php?t0='.(float)$resar[0]['t'].
+			/*$request=('http://srv2.inshell.ru/temp/farm6.php?t0='.(float)$resar[0]['t'].
 			'&t0s='.(float)$resar[0]['speed'].
 			'&t1='.(float)$resar[1]['t'].
 			'&t1s='.(float)$resar[1]['speed'].
@@ -80,7 +80,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 	public function checkTemp(){
 		$data = $this->getData();
-		
+
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
@@ -95,9 +95,9 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//проверка температур
 					$stateok=array();
-					
+
 					foreach($data['stat'] as $gpu) {
-							
+
 						if ($gpu['temp'] > $this->critemp) {
 							$stateok[]=false;
 						} else {
@@ -114,18 +114,15 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 							$this->notice['temp']=true;
 							$text.="Too high temperature on  ".$this->name."!(>".$this->critemp.")\r\n";
 							$text.=$data['text']."\r\n";
-						} 									
+						}
 					} else {
 						if ($this->notice['temp']==true){
 							$this->notice['temp']=false;
 							$text.=$this->name." is fine again!\r\n";
 							$text.=$data['text']."\r\n";
 						}
-															
+
 					}
-
-
-					
 
 				}
 		}
@@ -136,7 +133,7 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 	public function checkSpeed(){
 		$data = $this->getData();
-		
+
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
@@ -151,9 +148,9 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//проверка температур
 					$stateok=array();
-					
+
 					foreach($data['stat'] as $gpu) {
-							
+
 						if ($gpu['erate'] < $this->crispeed) {
 							$stateok[]=false;
 						} else {
@@ -170,26 +167,20 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 							$this->notice['speed']=true;
 							$text.="Hashrate of ".$this->name." is too low! (<".$this->crispeed.")\r\n";
 							$text.=$data['text']."\r\n";
-						} 									
+						}
 					} else {
 						if ($this->notice['speed']==true){
 							$this->notice['speed']=false;
 							$text.=$this->name." is fine again!\r\n";
 							$text.=$data['text']."\r\n";
 						}
-															
+
 					}
-
-
-					
 
 				}
 		}
 		return $text;
 	}
-
-
-
 
 }
 

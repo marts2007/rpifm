@@ -1,35 +1,34 @@
 <?php
 return array(
 	'general' => array(
-		'telegramkey' =>'' //bot api key here
+		'telegramkey' =>'530253851:AAECfTQUi1DyuJU_ZtT1TZWJHauwQj3dNeI' //bot api key here
 
 	),
 
-	'ferms' => array(  //list of your ferms
-		'rig1' => array(
-			'miner'=>'claymore', //claymore or ewbf
-			'host'=>'192.168.0.22', //ip
-			'port'=>'3333',	//miner api port
+	'farms' => array(  //list of your farms
+		'rig0' => array(
+			'miner'=>'ewbf', //claymore or ewbf
+			'host'=>'x194529b98.51mypc.cn', //ip
+			'port'=>'42000',	//miner api port
 			'psw' => '', //monitoring password, leave empty if no password
-			'gpu'=>5,		//number of gpu
-			'critemp'=>75,	//critical temp of gpu
-			'crispeed'=>20,	//alert hs speed
+			'gpu'=>6,		//number of gpu
+			'critemp'=>60,	//critical temp of gpu
+			'crispeed'=>500,	//alert hs speed
 			'alerts' => 'true'	//watch speed and temp
 		),
-		'rig2' => array(
+		'rig1' => array(
 			'miner'=>'ewbf', //claymore or ewbf
-			'host'=>'192.168.0.23', //ip
-			'port'=>'12345',	//miner api port
+			'host'=>'x194529b99.51mypc.cn', //ip
+			'port'=>'42000',	//miner api port
 			'psw' => '', //monitoring password, leave empty if no password
-			'gpu'=>5,		//number of gpu
-			'critemp'=>75,	//critical temp of gpu
-			'crispeed'=>290,	//alert hs speed
+			'gpu'=>6,		//number of gpu
+			'critemp'=>60,	//critical temp of gpu
+			'crispeed'=>500,	//alert hs speed
 			'alerts' => 'true'	//watch speed and temp
-		)
+		),
+
 	)
 
-
 );
-
 
 ?>

@@ -1,46 +1,55 @@
 ##By MartS 2017 admin.marts@gmail.com
-# Like it? donation btc address: 1CAVKj9o36Sb25FCZpfnk5pRESHzFKcWKD
+# Like it? donation BTC address: 1CAVKj9o36Sb25FCZpfnk5pRESHzFKcWKD
+## Updated by vomikan 2018 vomikan@mail.ru
+#
 
 [ENG]
 
-1 - edit config.php (add telegram bot api key (https://core.telegram.org/bots#3-how-do-i-create-a-bot)  and all your ferms settings)
+1 - edit config.php (add telegram bot api key (https://core.telegram.org/bots#3-how-do-i-create-a-bot)  and all your farms settings)
 2 - edit your php.ini (set max_execution_time to 0, install or enable php_curl)
-3 - set chmod 777 on script folder
-4 - edit your miner .bat file - (claymore - add --mport:3333) / (ewbf - add  --api 0.0.0.0:12345)
+3 - set chmod 777 on vars.php file
+4 - edit your miner .bat file - (claymore - add --mport:3333) / (ewbf - add  --api 0.0.0.0:42000)
 5 - create run scripts
-WINDOWS 
-	create 2 .bat files
-		1 - "[php bin folder]/php.exe [bot folder]/index.php"
-		2 - "[php bin folder]/php.exe [bot folder]/index.php cron"
+WINDOWS
+	create 3 .bat files
+		1 - "[php bin folder]\php.exe index.php"
+		2 - "[php bin folder]\php.exe index.php cron"
+		3 - "[php bin folder]\php.exe index.php watcher"
 LINUX
-	create 2 .sh files
-		1 - "[php bin folder]/php [bot folder]/index.php"
-		2 - "[php bin folder]/php [bot folder]/index.php cron"	
-6 - run both scripts
+	create 3 .sh files
+		1 - "[php bin folder]/php index.php"
+		2 - "[php bin folder]/php index.php cron"
+		3 - "[php bin folder]/php.exe index.php watcher"
+6 - run first and second scripts on 24/7 running host.
+7 - run third script on rigs.
 
+Assignment of files:
+1. The process responds to bot commands. He is able to parse the state of the miner via the web.
+2. Periodically scans the state of the miner via the web and, when critical indicators are reached, sends a message to the Telegram.
+3. Listens to commands sent to a particular rig and executes them.
 
 [РУС]
 
 1 - отредактируйте config.php (добавьте telegram bot api ключ (получить можно через телеграм у бота с именем @botfather, подробнее тут  https://core.telegram.org/bots#3-how-do-i-create-a-bot) и настройте параметры ваших ферм.
 2 - отредактируйте php.ini	(параметр max_execution_time 0) установите, или включите модуль php_curl
-3 - права на папку с ботом выставите chmod 777 (разрешить чтение запись, для всех)
+3 - права на файл  vars.php chmod 777 (разрешить чтение запись, для всех)
 4 - отредактируйте батник запуска майнера - (claymore - добавьте --mport:3333) / (ewbf - добавьте --api 0.0.0.0:12345)
 5 - создайте скрипты запуска
 
-WINDOWS 
-	создайте 2 .bat файла
+WINDOWS
+	создайте 3 .bat файла
 		1 - "[путь к папке с бинарниками php]/php.exe [bot folder]/index.php"
 		2 - "[путь к папке с бинарниками php]/php.exe [bot folder]/index.php cron"
+		3 - "[php bin folder]\php.exe index.php watcher"
 LINUX
 	create 2 .sh files
 		1 - "[путь к папке с бинарниками php]/php [bot folder]/index.php"
-		2 - "[путь к папке с бинарниками php]/index.php cron"	
-6 - запустите оба файла
+		2 - "[путь к папке с бинарниками php]/index.php cron"
+		3 - "[php bin folder]/php.exe index.php watcher"
+6 - запустите два первых файла
+7 - Третий файл запустите на риге
 
-7 - можно писать боту, список команд бот напишет в ответ на любое сообщение.
-
-
-Like it? donation btc address: 1CAVKj9o36Sb25FCZpfnk5pRESHzFKcWKD
-
-
-
+Назначение файлов:
+1. Процесс отвечает на команды бота. Умеет парсить состояние майнера через web.
+2. Периодически сканирует состояние майнера через web и при достижинии критических показателей отправляет сообщение в Телеграмм.
+3. Слушает команды присланные конкретной риге и выполняет их.

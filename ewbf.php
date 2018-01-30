@@ -12,8 +12,6 @@ public $alerts;
 public $connecttry=0;
 public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
-
-
 	public function __construct($params=array()){
 			$this->host = $params['host'];
 			$this->port = $params['port'];
@@ -22,8 +20,6 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 			$this->crispeed = $params['crispeed'];
 			$this->name = $params['name'];
 			$this->alerts = $params['alerts'];
-
-
 	}
 
 	public function getData(){
@@ -32,53 +28,73 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 		$resar = array();
 		if (isset($result->result)){
 			$this->connecttry=0;
+      $start_date = new DateTime("@$result->start_time");
+      $now_date=new DateTime("now");
+      $difference = $now_date->diff($start_date);
+      $uptime = $difference->format("%a").'d'
+                .str_pad($difference->h, 2, '0', STR_PAD_LEFT).':'
+                .str_pad($difference->i, 2, '0', STR_PAD_LEFT).':'
+                .str_pad($difference->s, 2, '0', STR_PAD_LEFT);
+
 			foreach($result->result as $card) {
 				//var_dump($card);
-				$resar[$card->gpuid]=array('temp'=> $card->temperature , 'speed'=>$card->speed_sps,'gpu_power_usage'=>$card->gpu_power_usage);
-				//echo $card->temperature;
+				$resar[$card->gpuid]=array('temp'=> $card->temperature
+                                  , 'speed'=>$card->speed_sps
+                                  ,'gpu_power_usage'=>$card->gpu_power_usage);
 			}
 		} else {
 			$this->connecttry++;
 		}
-		if (count($resar)) {
 
-			$text=$this->name." statistic\r\n";
+		if (count($resar)) {
+			$max_temp=0;
+			$tot_speed=0;
+			$tot_power=0;
+			$text="/".$this->name." Uptime: ".$uptime."\r\n";
 			for ($i=0; $i<(int)$this->gpu;$i++) {
 				//var_dump( $i);
-				$text.="GPU$i\t".$resar[$i]['temp']."°\t".$resar[$i]['speed']." Sol/s ".$resar[$i]['gpu_power_usage']."w\r\n";
+				$text.="GPU$i\t".$resar[$i]['temp']."°\t"
+                                  .$resar[$i]['speed']." Sol/s "
+                                  .$resar[$i]['gpu_power_usage']."W\r\n";
+        if ($resar[$i]['temp']>$max_temp)
+				{
+					$max_temp=$resar[$i]['temp'];
+				}
+				$tot_speed+=$resar[$i]['speed'];
+				$tot_power+=$resar[$i]['gpu_power_usage'];
 			}
+			$text.="Total:\t".(int)($max_temp)."°\t"
+			  .$tot_speed." Sol/s "
+				.$tot_power."W\r\n";
 
 			return array('text'=>$text,'stat'=>$resar);
-		} 
+		}
 		return null;
 		//var_dump($resar);
 		//$tcp->connect;
-	
-
-
 	}
 
 
 	public function checkTemp(){
 		$data = $this->getData();
-		
+
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
-				$text.="Can not connect to ".$this->name.", looks like it`s down!\r\n";
+				$text.="Can not connect to /".$this->name.", looks like it`s down!\r\n";
 				$this->notice['connect']=true;
 		} else {
 				if (is_array($data)) {
 					if ($this->notice['connect']) {
 						$this->notice['connect']=false;
-						$text.='Connection to the '.$this->name.' established, it`s online!';
+						$text.='Connection to the /'.$this->name.' established, it`s online!';
 					}
 
 					//проверка температур
 					$stateok=array();
-					
+
 					foreach($data['stat'] as $gpu) {
-							
+
 						if ($gpu['temp'] > $this->critemp) {
 							$stateok[]=false;
 						} else {
@@ -90,51 +106,45 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//var_dump($stateok);
 					if (in_array(false,$stateok)) {
-						echo 'something wrong'."\r\n";
+						echo "Temperature of ".$this->name." is too high!\r\n";
 						if (!$this->notice['temp']) {
 							$this->notice['temp']=true;
-							$text.="Looks like something is wrong with ".$this->name."!\r\n";
-							$text.=$data['text']."\r\n";
-						} 									
+							$text.="Temperature of /".$this->name." is too high!";
+							//$text.=$data['text']."\r\n";
+						}
 					} else {
 						if ($this->notice['temp']==true){
 							$this->notice['temp']=false;
-							$text.=$this->name." is fine again!\r\n";
-							$text.=$data['text']."\r\n";
+							$text.="/".$this->name." is fine again!";
+							//$text.=$data['text']."\r\n";
 						}
-															
 					}
-
-
-					
-
 				}
 		}
 		return $text;
 	}
 
 
-
 	public function checkSpeed(){
 		$data = $this->getData();
-		
+
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
-				$text.="Can not connect to ".$this->name.", looks like it`s down!\r\n";
+				$text.="Can not connect to /".$this->name.", looks like it`s down!\r\n";
 				$this->notice['connect']=true;
 		} else {
 				if (is_array($data)) {
 					if ($this->notice['connect']) {
 						$this->notice['connect']=false;
-						$text.='Connection to the '.$this->name.' established, it`s online!';
+						$text.='Connection to the /'.$this->name.' established, it`s online!';
 					}
 
 					//проверка температур
 					$stateok=array();
-					
+
 					foreach($data['stat'] as $gpu) {
-							
+
 						if ($gpu['speed'] < $this->crispeed) {
 							$stateok[]=false;
 						} else {
@@ -146,32 +156,24 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//var_dump($stateok);
 					if (in_array(false,$stateok)) {
-						echo 'something wrong'."\r\n";
+						echo "Hashrate of ".$this->name." is too low!\r\n";
 						if (!$this->notice['speed']) {
 							$this->notice['speed']=true;
-							$text.="Hashrate of ".$this->name." is too low!\r\n";
-							$text.=$data['text']."\r\n";
-						} 									
+							$text.="Hashrate of /".$this->name." is too low!";
+							//$text.=$data['text']."\r\n";
+						}
 					} else {
 						if ($this->notice['speed']==true){
 							$this->notice['speed']=false;
-							$text.=$this->name." is fine again!\r\n";
-							$text.=$data['text']."\r\n";
+							$text.="/".$this->name." is fine again!";
+							//$text.=$data['text']."\r\n";
 						}
-															
 					}
-
-
-					
-
 				}
 		}
 		return $text;
 	}
 
-
 }
-
-
 
 ?>
