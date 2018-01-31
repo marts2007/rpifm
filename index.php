@@ -15,9 +15,11 @@ class rpifm {
                  . "/unotify - stop notify".PHP_EOL
                  . "/farm_name - show farm info by it`s name".PHP_EOL;
   public $cmd = "commands:".PHP_EOL
-                . "/reboot - reboot OS".PHP_EOL
+                . "/externalip".PHP_EOL
                 . "/restart - restart miner".PHP_EOL
-                . "/shutdown - shutdown the system".PHP_EOL;
+                . "---------".PHP_EOL
+                . "/reboot".PHP_EOL
+                . "/shutdown";
   public $vars;
   public $config;
   public $farms;
@@ -147,7 +149,6 @@ class rpifm {
   {
     $string = $update->message->text;
 
-    $feedback='';
     switch ($string){
       case 'restart':
       $feedback='Restarting miner...'.PHP_EOL;
@@ -165,6 +166,10 @@ class rpifm {
       $feedback='Shuting down...'.PHP_EOL;
       $lin='tbc';
       $win='shutdown /f /s /t 0';
+      break;
+
+      case 'externalip':
+      $feedback = file_get_contents("http://ipecho.net/plain");
       break;
 
       default:
@@ -186,13 +191,14 @@ class rpifm {
 
     if ($this->active == 'true')
     {
+      if (isset($feedback)){
       $this->query('sendMessage'
         , array('chat_id'=>$update->message->chat->id,'text'=>$feedback));
+      }
+
       if (isset($win) || isset($lin)){
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
           pclose(popen($win.">NUL", "r"));
-          //pclose(popen($win, "r"));
-          echo "Command: ".$win.PHP_EOL;
         } else {
           shell_exec("/usr/bin/nohup ".$lin." >/dev/null 2>&1 &");
         }
