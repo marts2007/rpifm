@@ -81,13 +81,13 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
-				$text.="Can not connect to /".$this->name.", looks like it`s down!\r\n";
+				$text.="Can not connect to /".$this->name.", looks like it`s down!".PHP_EOL;
 				$this->notice['connect']=true;
 		} else {
 				if (is_array($data)) {
 					if ($this->notice['connect']) {
 						$this->notice['connect']=false;
-						$text.='Connection to the /'.$this->name.' established, it`s online!';
+						$text.='Connection to the /'.$this->name.' established, it`s online!'.PHP_EOL;
 					}
 
 					//проверка температур
@@ -106,16 +106,16 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//var_dump($stateok);
 					if (in_array(false,$stateok)) {
-						echo "Temperature of ".$this->name." is too high!\r\n";
+						echo "Temperature of ".$this->name." is too high!".PHP_EOL;
 						if (!$this->notice['temp']) {
 							$this->notice['temp']=true;
-							$text.="Temperature of /".$this->name." is too high!";
+							$text.="Temperature of /".$this->name." is too high!".PHP_EOL;
 							//$text.=$data['text']."\r\n";
 						}
 					} else {
 						if ($this->notice['temp']==true){
 							$this->notice['temp']=false;
-							$text.="/".$this->name." is fine again!";
+							$text.="/".$this->name." is fine again!".PHP_EOL;
 							//$text.=$data['text']."\r\n";
 						}
 					}
@@ -131,13 +131,13 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 		$text='';
 		if ($this->connecttry >= 5 && !$this->notice['connect']) {
 				//не смогли подключиться к майнеру, нет данных :(
-				$text.="Can not connect to /".$this->name.", looks like it`s down!\r\n";
+				$text.="Can not connect to /".$this->name.", looks like it`s down!".PHP_EOL;
 				$this->notice['connect']=true;
 		} else {
 				if (is_array($data)) {
 					if ($this->notice['connect']) {
 						$this->notice['connect']=false;
-						$text.='Connection to the /'.$this->name.' established, it`s online!';
+						$text.='Connection to the /'.$this->name.' established, it`s online!'.PHP_EOL;
 					}
 
 					//проверка температур
@@ -156,16 +156,16 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 
 					//var_dump($stateok);
 					if (in_array(false,$stateok)) {
-						echo "Hashrate of ".$this->name." is too low!\r\n";
+						echo "Hashrate of ".$this->name." is too low!".PHP_EOL;
 						if (!$this->notice['speed']) {
 							$this->notice['speed']=true;
-							$text.="Hashrate of /".$this->name." is too low!";
+							$text.="Hashrate of /".$this->name." is too low!".PHP_EOL;
 							//$text.=$data['text']."\r\n";
 						}
 					} else {
 						if ($this->notice['speed']==true){
 							$this->notice['speed']=false;
-							$text.="/".$this->name." is fine again!";
+							$text.="/".$this->name." is fine again!".PHP_EOL;
 							//$text.=$data['text']."\r\n";
 						}
 					}
