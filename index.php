@@ -94,8 +94,8 @@ class rpifm {
               $text=$this->checkEvents();
               foreach($this->vars->notifylist as $chat_id) {
                 if ($text) {
-                   $this->query('sendMessage'
-                     , array('chat_id'=>$chat_id,'text'=>$text));
+                  $this->query('sendMessage'
+                    , array('chat_id'=>$chat_id,'text'=>$text));
                 }
               }
             }

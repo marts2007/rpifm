@@ -1,7 +1,7 @@
 <?php
 return array(
 	'general' => array(
-		'telegramkey' =>'530253851:AAECfTQUi1DyuJU_ZtT1TZWJHauwQj3dNeI' //bot api key here
+		'telegramkey' =>'530253852:AAECfTQUi1DyuJU_ZtT1TZWJHauwQj3dNeI' //bot api key here
 
 	),
 
@@ -14,7 +14,7 @@ return array(
 			'gpu'=>6,		//number of gpu
 			'critemp'=>60,	//critical temp of gpu
 			'crispeed'=>500,	//alert hs speed
-			'alerts' => 'true'	//watch speed and temp
+			'alerts' => true	//watch speed and temp
 		),
 		'rig1' => array(
 			'miner'=>'ewbf', //claymore or ewbf
@@ -24,7 +24,7 @@ return array(
 			'gpu'=>6,		//number of gpu
 			'critemp'=>60,	//critical temp of gpu
 			'crispeed'=>500,	//alert hs speed
-			'alerts' => 'true'	//watch speed and temp
+			'alerts' => true	//watch speed and temp
 		),
 
 	)
