@@ -67,11 +67,12 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 			  .$tot_speed." Sol/s "
 				.$tot_power."W\r\n";
 
-			return array('text'=>$text,'stat'=>$resar);
-		}
-		return null;
+		} else {
+		  $text= "/".$this->name." is unavailable.".PHP_EOL;
+	  }
 		//var_dump($resar);
 		//$tcp->connect;
+		return array('text'=>$text,'stat'=>$resar);
 	}
 
 

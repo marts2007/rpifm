@@ -45,8 +45,10 @@ public $notice=array('temp'=>false,'speed'=>false,'connect'=>false);
 			//var_dump($temps);
 			$text="/".$this->name." ".PHP_EOL;
 			for($i=0;$i<$this->gpu;$i++) {
-				$gpu[$i]=array('temp'=>$temps[$i*2],'cooler'=>$temps[$i+2],'erate'=>round($ethhashrates[$i]/1000,2),'drate'=>$dcrhashrates[$i]);
-				$text.="GPU".$i."\t".$gpu[$i]['temp']."°(".$gpu[$i]['cooler']."%)\t".$gpu[$i]['erate']." hs / ".$gpu[$i]['drate']." hs\r\n";
+				$gpu[$i]=array('temp'=>$temps[$i*2],'cooler'=>$temps[$i+2]
+				  ,'erate'=>round($ethhashrates[$i]/1000,2),'drate'=>$dcrhashrates[$i]);
+				$text.="GPU".$i."\t".$gpu[$i]['temp']."°(".$gpu[$i]['cooler']."%)\t
+				  .$gpu[$i]['erate']." hs / ".$gpu[$i]['drate']." hs".PHP_EOL;
 			}
 			//var_dump($result);
 
